@@ -1,0 +1,11 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  # no npm deps: ship files as-is so server.js keeps __dirname/require semantics
+  node_bundler = "none"
+  included_files = ["server.js", "public/logic.js"]

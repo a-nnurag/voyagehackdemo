@@ -431,7 +431,7 @@ function serveStatic(p, res) {
   });
 }
 
-http.createServer(async (req, res) => {
+const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://localhost');
     const p = url.pathname, m = req.method;
@@ -470,4 +470,7 @@ http.createServer(async (req, res) => {
     if (!e.status) console.error(e);
     if (!res.headersSent) send(res, e.status || 500, { error: e.status ? e.message : 'Internal error' });
   }
-}).listen(PORT, () => console.log(`OpsDesk running → http://localhost:${PORT}`));
+});
+// Run directly → listen on PORT. Imported (Netlify function) → the caller decides where to listen.
+if (!process.env.OPSDESK_EMBEDDED) server.listen(PORT, () => console.log(`OpsDesk running → http://localhost:${PORT}`));
+module.exports = server;

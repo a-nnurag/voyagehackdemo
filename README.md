@@ -15,9 +15,15 @@ npm test         # self-checks for SLA, classifier, routing, linking
 
 Data lives in `opsdesk.db` (SQLite), so a refresh or restart keeps the queue. It is seeded on first start. **Team & routing → Reset demo data** (Ops Lead) reseeds with timestamps relative to *now*, so do this right before you record.
 
-## Deploy (Render, free)
+## Deploy
 
-The app is a long-running Node server with a SQLite file, so use a Node host (Render, Railway, Fly.io) rather than a static/serverless host like Netlify.
+### Netlify
+
+`netlify.toml` configures everything: `public/` is served as static files, and `/api/*` runs the same `server.js` inside a Netlify Function (`netlify/functions/api.mjs`). Import the repo on Netlify and leave the build command empty.
+
+The database lives in the function's `/tmp`, so the demo data reseeds after the function goes idle, and two function instances can briefly show different data. That's fine for a demo. For shared live data, use a Node host or a hosted database.
+
+### Render (free)
 
 1. render.com → **New → Web Service** → connect this repo.
 2. Runtime **Node**, build `npm install`, start `npm start`, instance **Free**.
