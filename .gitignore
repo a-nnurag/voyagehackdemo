@@ -1,0 +1,11 @@
+# local database (reseeds on start)
+opsdesk.db*
+
+node_modules/
+
+# generated video assets (rebuild with the scripts in video/)
+video/audio/
+video/rec/
+video/out/
+video/check/
+video/fail-*.png
